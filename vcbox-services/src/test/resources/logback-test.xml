@@ -1,0 +1,26 @@
+<configuration scan="false" debug="true">
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <appender name="ColorConsole" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}[%highlight(%level)][%.10thread] %cyan(%logger{32}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="AsyncColor" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>500</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="ColorConsole" />
+    </appender>
+
+    <logger name="org.hyperledger.indy.sdk.LibIndy.native" level="WARN"/>
+    <logger name="org.bitcoinj.crypto.MnemonicCode" level="WARN"/>
+
+    <root level="INFO">
+        <appender-ref ref="AsyncColor"/>
+    </root>
+</configuration>

@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+  hc-mongo:
+    image: mongo
+    container_name: hc-mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - hc-mongo:/data/db
+  node1:
+    image: blokaly/xpindy-node1
+    container_name: indy-node1
+    networks:
+      indy-agent-network:
+        ipv4_address: 172.18.0.2
+    restart: unless-stopped
+
+  node2:
+    image: blokaly/xpindy-node2
+    container_name: indy-node2
+    networks:
+      indy-agent-network:
+        ipv4_address: 172.18.0.3
+    restart: unless-stopped
+
+networks:
+  indy-agent-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+      driver: default
+
+volumes:
+  hc-mongo:
+    name: hc_mongo

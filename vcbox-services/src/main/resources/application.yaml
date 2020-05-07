@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: local
+  main:
+    banner-mode: "off"
+server:
+  port: 8080
+
+indy:
+  client:
+    genesisFile: src/main/resources/vcbox_transactions_genesis
+    poolName: vcbox
+    maxCredNum: 50
+    tailsPath: /tmp/indy
+    walletsPath: /tmp/indy/wallet
